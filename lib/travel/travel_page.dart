@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_design/travel/components/my_clipper.dart';
+import 'package:ui_design/travel/components/room_card.dart';
 
 class TravelPage extends StatelessWidget {
   const TravelPage({super.key});
@@ -30,154 +32,206 @@ class TravelPage extends StatelessWidget {
             ),
           ],
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Column(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Expanded(
+                          flex: 3,
+                          child: Text(
+                            "Furama Riverfront, Singapore",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Image.asset(
+                                "assets/icons/nextred@2x.png",
+                                height: 40,
+                                width: 40,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Expanded(
+                          flex: 3,
+                          child: Text(
+                            "405 Havelock Road, Singapore 169633",
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Image.asset(
+                                "assets/icons/currentlocation@2x.png",
+                                height: 35,
+                                width: 35,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Stack(
                 children: [
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 3,
-                        child: Text(
-                          "Furama Riverfront, Singapore",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                  SizedBox(
+                    height: 250,
+                    child: SizedBox(
+                      height: 200,
+                      width: double.infinity,
+                      child: CarouselSlider(
+                        items: List.generate(
+                          3,
+                          (index) => CachedNetworkImage(
+                            imageUrl:
+                                "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                            height: 150,
+                            fit: BoxFit.fill,
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Image.asset(
-                              "assets/icons/nextred@2x.png",
-                              height: 40,
-                              width: 40,
-                            ),
-                          ),
+                        options: CarouselOptions(
+                          viewportFraction: 0.9,
+                          autoPlay: true,
                         ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 3,
-                        child: Text(
-                          "405 Havelock Road, Singapore 169633",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                  Positioned(
+                    bottom: 0,
+                    right: -10,
+                    child: Center(
+                      child: ClipPath(
+                        clipper: MyClipper(
+                          borderRadius: 0,
+                          angle: 45,
                         ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Image.asset(
-                              "assets/icons/currentlocation@2x.png",
-                              height: 35,
-                              width: 35,
+                        child: Container(
+                          color: Colors.grey.shade900.withOpacity(.9),
+                          height: 35,
+                          width: 150,
+                          child: ClipPath(
+                            clipper: MyClipper(
+                              borderRadius: 0,
+                              angle: 75,
                             ),
+                            child: const Center(
+                                child: Text(
+                              "See All 2/68",
+                              style: TextStyle(color: Colors.white),
+                            )),
                           ),
                         ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: CarouselSlider(
-                items: List.generate(
-                  3,
-                  (index) => CachedNetworkImage(
-                    imageUrl:
-                        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-                    height: 150,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                options: CarouselOptions(
-                  viewportFraction: 0.85,
-                  autoPlay: true,
-                ),
+              const SizedBox(
+                height: 12,
               ),
-            ),
-            Center(
-              child: ClipPath(
-                clipper: MyClipper(
-                  borderRadius: 0,
-                  angle: 45,
-                ),
-                child: Container(
-                  color: Colors.black.withOpacity(.8),
-                  height: 20,
-                  width: 150,
-                  child: ClipPath(
-                    clipper: MyClipper(
-                      borderRadius: 0,
-                      angle: 45,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Expanded(
+                      child: _ActivityTab(
+                        imagePath: "assets/icons/theme@2x.png",
+                        name: 'Amenities',
+                      ),
                     ),
-                    child: const Center(
-                        child: Text(
-                      "See All",
-                      style: TextStyle(color: Colors.white),
-                    )),
-                  ),
+                    Expanded(
+                      child: _ActivityTab(
+                        imagePath: "assets/icons/workout@2x.png",
+                        name: 'Facilities',
+                      ),
+                    ),
+                    Expanded(
+                      child: _ActivityTab(
+                        imagePath: "assets/icons/fnb@2x.png",
+                        name: 'F&B',
+                      ),
+                    ),
+                    Expanded(
+                      child: _ActivityTab(
+                        imagePath: "assets/icons/kidsfamily@2x.png",
+                        name: 'Kids/Family',
+                      ),
+                    ),
+                    Expanded(
+                      child: _ActivityTab(
+                        imagePath: "assets/icons/wellness@2x.png",
+                        name: 'Wellness',
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+              ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return const RoomCard();
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider(
+                      color: Colors.black,
+                    );
+                  },
+                  itemCount: 10),
+            ],
+          ),
         ));
   }
 }
 
-class MyClipper extends CustomClipper<Path> {
-  final double _borderRadius; // percentage of the shortest side
-  final double _angle;
-
-  MyClipper({
-    required double borderRadius,
-    required double angle,
-  })  : _borderRadius = borderRadius,
-        _angle = angle;
-
+class _ActivityTab extends StatelessWidget {
+  const _ActivityTab({super.key, required this.imagePath, required this.name});
+  final String imagePath;
+  final String name;
   @override
-  Path getClip(Size size) {
-    final borderRadius = _borderRadius * size.shortestSide;
-    final dx = borderRadius * cos(_angle);
-    final dy = borderRadius * sin(_angle);
-    final dX = size.height / tan(_angle);
-    Path path = Path()
-      ..moveTo(borderRadius, size.height)
-      ..quadraticBezierTo(0, size.height, dx, size.height - dy)
-      ..lineTo(dX - dx, dy)
-      ..quadraticBezierTo(dX, 0, dX + borderRadius, 0)
-      ..lineTo(size.width - borderRadius, 0)
-      ..quadraticBezierTo(size.width, 0, size.width - dx, dy)
-      ..lineTo(size.width - dX + dx, 0)
-      ..quadraticBezierTo(size.width - dX, size.height,
-          size.width - dX - borderRadius, size.height)
-      ..close();
-
-    return path;
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image.asset(
+          imagePath,
+          height: 40,
+        ),
+        Text(
+          name,
+          style: const TextStyle(fontSize: 12),
+        )
+      ],
+    );
   }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-
-double degToRad(num deg) => deg * (pi / 180.0);
