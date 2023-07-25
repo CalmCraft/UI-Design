@@ -112,16 +112,23 @@ class RateCard extends StatelessWidget {
             ),
           ),
           Container(
+            height: 40,
             decoration: const BoxDecoration(
               color: Colors.yellow,
             ),
-            child: const Center(
-              child: Text(
-                "MEMBERS DEALS",
-                style: TextStyle(fontWeight: FontWeight.bold),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.imagesearch_roller),
+                  Text(
+                    "MEMBERS DEALS",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

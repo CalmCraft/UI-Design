@@ -6,11 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:ui_design/travel/components/activity_tab.dart';
 import 'package:ui_design/travel/components/my_clipper.dart';
 import 'package:ui_design/travel/components/room_card.dart';
-
 import 'components/rate_card.dart';
 
-class TravelPage extends StatelessWidget {
+enum FilterType { room, rate }
+
+class TravelPage extends StatefulWidget {
   const TravelPage({super.key});
+
+  @override
+  State<TravelPage> createState() => _TravelPageState();
+}
+
+class _TravelPageState extends State<TravelPage> {
+  FilterType currentType = FilterType.room;
+  void _update(FilterType type) {
+    setState(() {
+      currentType = type;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -198,22 +211,94 @@ class TravelPage extends StatelessWidget {
                   ],
                 ),
               ),
-              ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return const RateCard();
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider(
-                      color: Colors.black,
-                    );
-                  },
-                  itemCount: 10),
+              const SizedBox(
+                height: 12,
+              ),
+              _TabBar(
+                filterType: currentType,
+                update: _update,
+              ),
+              currentType == FilterType.rate
+                  ? ListView.separated(
+                      key: GlobalKey(),
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return const RateCard();
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          color: Colors.black,
+                        );
+                      },
+                      itemCount: 10)
+                  : ListView.separated(
+                      key: GlobalKey(),
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return const RoomCard();
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          color: Colors.black,
+                        );
+                      },
+                      itemCount: 10),
             ],
           ),
         ));
+  }
+}
+
+class _TabBar extends StatelessWidget {
+  _TabBar({super.key, required this.filterType, required this.update});
+  FilterType filterType;
+  final ValueChanged<FilterType> update;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      height: 40,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: const Color(0xFF9FBFD2),
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                update(FilterType.room);
+              },
+              child: Container(
+                color: filterType == FilterType.room
+                    ? const Color(0xFF9FBFD2)
+                    : Colors.white,
+                child: const Center(child: Text("By Room")),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                update(FilterType.rate);
+              },
+              child: Container(
+                color: filterType == FilterType.room
+                    ? Colors.white
+                    : const Color(0xFF9FBFD2),
+                child: const Center(child: Text("By Rates")),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
