@@ -3,8 +3,11 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_design/travel/components/activity_tab.dart';
 import 'package:ui_design/travel/components/my_clipper.dart';
 import 'package:ui_design/travel/components/room_card.dart';
+
+import 'components/rate_card.dart';
 
 class TravelPage extends StatelessWidget {
   const TravelPage({super.key});
@@ -163,31 +166,31 @@ class TravelPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
                     Expanded(
-                      child: _ActivityTab(
+                      child: ActivityTab(
                         imagePath: "assets/icons/theme@2x.png",
                         name: 'Amenities',
                       ),
                     ),
                     Expanded(
-                      child: _ActivityTab(
+                      child: ActivityTab(
                         imagePath: "assets/icons/workout@2x.png",
                         name: 'Facilities',
                       ),
                     ),
                     Expanded(
-                      child: _ActivityTab(
+                      child: ActivityTab(
                         imagePath: "assets/icons/fnb@2x.png",
                         name: 'F&B',
                       ),
                     ),
                     Expanded(
-                      child: _ActivityTab(
+                      child: ActivityTab(
                         imagePath: "assets/icons/kidsfamily@2x.png",
                         name: 'Kids/Family',
                       ),
                     ),
                     Expanded(
-                      child: _ActivityTab(
+                      child: ActivityTab(
                         imagePath: "assets/icons/wellness@2x.png",
                         name: 'Wellness',
                       ),
@@ -201,7 +204,7 @@ class TravelPage extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return const RoomCard();
+                    return const RateCard();
                   },
                   separatorBuilder: (context, index) {
                     return const Divider(
@@ -212,26 +215,5 @@ class TravelPage extends StatelessWidget {
             ],
           ),
         ));
-  }
-}
-
-class _ActivityTab extends StatelessWidget {
-  const _ActivityTab({super.key, required this.imagePath, required this.name});
-  final String imagePath;
-  final String name;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          imagePath,
-          height: 40,
-        ),
-        Text(
-          name,
-          style: const TextStyle(fontSize: 12),
-        )
-      ],
-    );
   }
 }
